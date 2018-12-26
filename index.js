@@ -10,6 +10,12 @@ const server = http.createServer((req, res) => {
   const path = parsedUrl.pathname;
   const trimmedPath = path.replace(/^\/+|\/+$/g, '');
 
+  // get the http method
+  const method = req.method.toLowerCase();
+
+  // Log the request path + method
+  console.log('Trimmed path + method', trimmedPath, method);
+
   // Send the response
   res.end('hello\n')
 });
