@@ -49,7 +49,7 @@ const server = http.createServer((req, res) => {
     chosenHandler(data, function(statusCode, payload) {
 
       // Use the status code called back by the handler, or default to 200
-      statusCode = typeof (statusCode) == 'number' ? statusCode : 200;
+      statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
 
       // Use the payload called back by the handler, or default to empty object
       payload = typeof(payload) == 'object' ? payload : {};
@@ -58,6 +58,7 @@ const server = http.createServer((req, res) => {
       const payloadString = JSON.stringify(payload);
 
       // Return the response
+      res.setHeader('Content-type', 'application/json'); // make sure the response is sent back as JSON
       res.writeHead(statusCode);
       res.end(payloadString);
 
