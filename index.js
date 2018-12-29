@@ -30,7 +30,7 @@ httpsServer.listen(config.httpsPort, () =>{
 });
 
 // all the server logic for both http && https server
-const unifiedServer = function(req, res) {
+const unifiedServer = (req, res) => {
   // Parse the url
   const parsedUrl = url.parse(req.url, true);
 
@@ -51,11 +51,11 @@ const unifiedServer = function(req, res) {
   // Get the payload if there is any
   const decoder = new StringDecoder('utf-8');
   let buffer = '';
-  req.on('data', function(data) {
+  req.on('data', data => {
     // On the event of receiving piece of 'data' we decode it and append it the buffer string;
     buffer += decoder.write(data);
   });
-  req.on('end', function() {
+  req.on('end', () => {
     buffer += decoder.end();
     // Log the request path + method
     console.log('payload received:', buffer);
@@ -73,7 +73,7 @@ const unifiedServer = function(req, res) {
     };
 
     // Route the request to the handler specified in the router
-    chosenHandler(data, function (statusCode, payload) {
+    chosenHandler(data, (statusCode, payload) => {
 
       // Use the status code called back by the handler, or default to 200
       statusCode = typeof (statusCode) == 'number' ? statusCode : 200;
@@ -98,18 +98,17 @@ const unifiedServer = function(req, res) {
 // Define the handlers
 const handlers = {};
 
-// Sample handler
-handlers.sample = function(data, callback) {
-  //Callback a http status code, and a payload object
-  callback(406, {'name': 'sample handler'});
+// ping handler
+handlers.ping = (data, callback) => {
+  callback(200);
 }
 
 // Not found handler
-handlers.notFound = function(data, callback) {
+handlers.notFound = (data, callback) => {
   callback(404);
 }
 
 // Define a request router
 const router = {
-  'sample': handlers.sample
+  'ping': handlers.ping
 }
