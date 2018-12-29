@@ -2,6 +2,7 @@
 const http = require('http');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
+const config = require('./config');
 
 const server = http.createServer((req, res) => {
   // Parse the url
@@ -44,7 +45,7 @@ const server = http.createServer((req, res) => {
       'headers': headers,
       'payload': buffer,
     };
-
+    
     // Route the request to the handler specified in the router
     chosenHandler(data, function(statusCode, payload) {
 
@@ -67,8 +68,8 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(3000, () =>{
-  console.log('The server is listenning on Port 3000');
+server.listen(config.port, () =>{
+  console.log(`The server is listenning on Port ${config.port} in ${config.envName} mode`);
 });
 
 
