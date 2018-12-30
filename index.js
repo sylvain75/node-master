@@ -6,6 +6,12 @@ const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 const fs = require('fs');
 
+const _data = require('./lib/data');
+
+// TESTING
+_data.create('test', 'fileNameWhereToWriteData', {foo1: 'bar1'}, (error) => {
+  console.log('error HERE', error);})
+
 const httpServer = http.createServer((req, res) => {
   unifiedServer(req, res);
 });
